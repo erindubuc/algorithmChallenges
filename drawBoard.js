@@ -3,27 +3,28 @@
 let row;
 let column;
 const blank = String.fromCharCode(32);
-// const blank = String.fromCharCode(127);
 const vertical = String.fromCharCode(124);
 const horiz = String.fromCharCode(95);
-const plus = String.fromCharCode(43);
+// const plus = String.fromCharCode(43);
+// const blank = String.fromCharCode(127);
 	 
-function drawRows() {
+const drawRows = () => {
 	
 	for (row = 1; row < 4; row++) {
 		console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
 	}
-}
+};
 
-function horizRow() {
+const horizRow = () => {
 	console.log(horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz);
-}
-function drawBoard() {
+};
+
+const drawBoard = () => {
 	for (let i = 0; i < 2; i++) {
 		drawRows();
 		horizRow();
 	}
 	drawRows();
-}
+};
 	
 drawBoard();
