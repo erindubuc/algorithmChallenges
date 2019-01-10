@@ -4,8 +4,9 @@ let row;
 let column;
 const blank = String.fromCharCode(32);
 const vertical = String.fromCharCode(124);
-const horiz = String.fromCharCode(95);
-// const plus = String.fromCharCode(43);
+// const horiz = String.fromCharCode(95);
+const horiz = String.fromCharCode(45);
+const plus = String.fromCharCode(43);
 // const blank = String.fromCharCode(127);
 	 
 const drawRows = () => {
@@ -16,7 +17,7 @@ const drawRows = () => {
 };
 
 const horizRow = () => {
-	console.log(horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz, horiz);
+	console.log(horiz, horiz, horiz, plus, horiz, horiz, horiz, plus, horiz, horiz, horiz);
 };
 
 const drawBoard = () => {
