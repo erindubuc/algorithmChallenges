@@ -11,16 +11,16 @@ const plus = String.fromCharCode(43);
 	 
 const drawRows = () => {
 	//to print out blank rows
-	// for (row = 1; row < 4; row++) {
-	// 	console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
-	// }
-	
-	// to print out Xs and Os within the boxes -> hardcoded
-	for (row = 1; row < 2; row++) {
-		console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
-		console.log(blank, "X", blank, vertical, blank, "O", blank, vertical, blank, "X", blank);
+	for (row = 1; row < 4; row++) {
 		console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
 	}
+	
+	// to print out Xs and Os within the boxes -> hardcoded
+	// for (row = 1; row < 2; row++) {
+	// 	console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
+	// 	// console.log(blank, "X", blank, vertical, blank, "O", blank, vertical, blank, "X", blank);
+	// 	console.log(blank, blank, blank, vertical, blank, blank, blank, vertical, blank, blank, blank);
+	// }
 };
 
 const horizRow = () => {
