@@ -10,6 +10,17 @@ const boardPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 let initialState = [null, null, null, null, null, null, null, null, null];
 
+const winningPos = [
+	[1,2,3],
+	[1,4,7],
+	[1,5,9],
+	[4,5,6],
+	[7,8,9],
+	[2,5,8],
+	[3,6,9],
+	[7,5,3]
+	];
+
 
 const drawRows = () => {
 	//to print out blank rows
