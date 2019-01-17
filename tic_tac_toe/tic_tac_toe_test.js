@@ -6,21 +6,24 @@ const horiz = String.fromCharCode(45);
 const plus = String.fromCharCode(43);
 
 
-const boardPositions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const boardPositions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
 let initialState = [null, null, null, null, null, null, null, null, null];
 
-const winningPos = [
-	[1,2,3],
+const winningPositions = [
+	[0,1,2],
+	[3,4,5],
+	[6,7,8],
+	[0,4,8],
+	[2,4,6],
+	[0,3,6],
 	[1,4,7],
-	[1,5,9],
-	[4,5,6],
-	[7,8,9],
-	[2,5,8],
-	[3,6,9],
-	[7,5,3]
+	[2,5,8]
 	];
 
+let move, // whose turn it is -> X or O
+	turn, // boolean? X turn = true, O = false
+	moveCount;  // counter 
 
 const drawRows = () => {
 	//to print out blank rows
