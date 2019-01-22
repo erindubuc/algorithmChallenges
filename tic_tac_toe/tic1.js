@@ -79,4 +79,43 @@ const importBoard = (positions) => {
 	console.log(player1, player2);
 };
 
+// Import hard-coded positions into board
 importBoard(positions);
+
+
+
+// const playerMove = (position, letter) => {
+	
+	
+// }
+
+
+
+// Determine if a "move" is valid before adding player input to the board
+const isValidMove = (position) => {
+	
+	// Setting isValid to false so that it will be turned true when player makes a valid choice
+	let isValid = false;
+	
+	// Move can't be less than 0 or greater than 8
+	if (position < 0 || position > 8) {
+		console.log("You can only choose a position from 0-8.");
+		console.log(isValid);
+		return;
+	// If the position is already occupied
+	} else if (positions[position] != ' ') {
+		console.log("This position is already taken!");
+		console.log(isValid);
+		return;
+	// Position is empty and valid
+	} else {
+		isValid = true;
+		console.log("Great idea! Please enter an 'X' or 'O'.");
+		console.log(isValid);
+		return true;
+	}
+
+};
+
+// Determine if this cell is valid for a move
+isValidMove(1);
