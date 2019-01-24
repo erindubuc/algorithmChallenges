@@ -7,8 +7,8 @@ const plus = String.fromCharCode(43);
 // to get a hold of where user will input their mark of X or O
 // let positions = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 // to store 'empty' value upon starting a new game
-// let positions = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-let positions = ['X', ' ', 'O', ' ', 'X', 'O', 'X', ' ', 'O'];
+let positions = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+
 const winningPositions = [
 	[0,1,2],
 	[3,4,5],
@@ -58,37 +58,42 @@ const drawBoard = () => {
 	
 };
 	
-// drawBoard();
 
 // board will be created with positions filled in with moves
-const importBoard = (positions) => {
-	drawBoard();
-
+const importBoard = (string) => {
+	
+	// Add played positions to empty positions array
+	for (let i = 0; i < positions.length; i++) {
+		 positions[i] = string[i];
+	}
+		console.log(positions);
+	
 	// to push moves to player arrays
 	// if move is x push to player1 array
-	for (let i = 0; i < positions.length; i++) {	
+	for (let j = 0; j < positions.length; j++) {	
 		
-		if (positions[i] == 'X')
-			player1.push(i);
-		else if (positions[i] == 'O')
-			player2.push(i);
+		if (positions[j] == 'X' || positions[j] == 'x')
+			player1.push(j);
+		else if (positions[j] == 'O' || positions[j] == 'o')
+			player2.push(j);
 		else
-			empty.push(i);
+			empty.push(j);
 	
 	}
+
 	console.log(player1, player2);
 };
 
 // Import hard-coded positions into board
-importBoard(positions);
+let boardPositions = ['', 'x', 'O', 'o', 'X', 'O', 'X', 'x', 'O'];
+importBoard(boardPositions);
 
-
+drawBoard();
 
 // const playerMove = (position, letter) => {
 	
 	
 // }
-
 
 
 // Determine if a "move" is valid before adding player input to the board
@@ -100,18 +105,18 @@ const isValidMove = (position) => {
 	// Move can't be less than 0 or greater than 8
 	if (position < 0 || position > 8) {
 		console.log("You can only choose a position from 0-8.");
-		console.log(isValid);
+		console.log("Is this move valid?", isValid);
 		return;
 	// If the position is already occupied
 	} else if (positions[position] != ' ') {
 		console.log("This position is already taken!");
-		console.log(isValid);
+		console.log("Is this move valid?", isValid);
 		return;
 	// Position is empty and valid
 	} else {
 		isValid = true;
 		console.log("Great idea! Please enter an 'X' or 'O'.");
-		console.log(isValid);
+		console.log("Is this move valid?", isValid);
 		return true;
 	}
 
@@ -119,3 +124,17 @@ const isValidMove = (position) => {
 
 // Determine if this cell is valid for a move
 isValidMove(1);
+
+// Check the state of the board and determine if the game is over (not by winning for the moment)
+const isGameOver = () => {
+	
+	let gameOver = false;
+	// If length is 9 or greater, there are no more moves to be made = DRAW
+	if (player1.length + player2.length >= 9)
+		return true;
+	else
+		return false;
+	
+}
+isGameOver();
+console.log("Is the game over?", isGameOver());
