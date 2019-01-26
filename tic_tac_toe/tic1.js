@@ -9,16 +9,16 @@ const plus = String.fromCharCode(43);
 // to store 'empty' value upon starting a new game
 let positions = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 
-const winningPositions = [
-	[0,1,2],
-	[3,4,5],
-	[6,7,8],
-	[0,4,8],
-	[2,4,6],
-	[0,3,6],
-	[1,4,7],
-	[2,5,8]
-	];
+// const winningPositions = [
+// 	[0,1,2],
+// 	[3,4,5],
+// 	[6,7,8],
+// 	[0,4,8],
+// 	[2,4,6],
+// 	[0,3,6],
+// 	[1,4,7],
+// 	[2,5,8]
+// 	];
 
 // Arrays to hold player moves
 // When player makes a move, their position number will get pushed to their array
@@ -85,7 +85,7 @@ const importBoard = (string) => {
 };
 
 // Import hard-coded positions into board
-let boardPositions = ['', 'x', 'O', 'o', 'X', 'O', 'X', 'x', 'O'];
+let boardPositions = ['X', 'x', 'X', 'o', 'X', 'O', 'X', 'x', 'O'];
 importBoard(boardPositions);
 
 drawBoard();
@@ -123,18 +123,68 @@ const isValidMove = (position) => {
 };
 
 // Determine if this cell is valid for a move
-isValidMove(1);
+// isValidMove(1);
 
 // Check the state of the board and determine if the game is over (not by winning for the moment)
 const isGameOver = () => {
 	
-	let gameOver = false;
 	// If length is 9 or greater, there are no more moves to be made = DRAW
 	if (player1.length + player2.length >= 9)
 		return true;
 	else
 		return false;
 	
-}
+};
 isGameOver();
 console.log("Is the game over?", isGameOver());
+
+// Determine if there are any winning combinations
+const isWinner = () => {
+	// Winners
+	if (positions[0] == positions[1] && positions[0] == positions[2])
+		return true;
+	if (positions[3] == positions[4] && positions[3] == positions[5])
+		return true;
+	if (positions[6] == positions[7] && positions[6] == positions[8])
+		return true;
+	if (positions[0] == positions[4] && positions[0] == positions[8])
+		return true;
+	if (positions[2] == positions[4] && positions[2] == positions[6])
+		return true;
+	if (positions[0] == positions[3] && positions[0] == positions[6])
+		return true;
+	if (positions[1] == positions[4] && positions[1] == positions[7])
+		return true;
+	if (positions[2] == positions[5] && positions[2] == positions[8])
+		return true;
+	// Not winner
+	else
+		return false;
+};
+isWinner();
+console.log("Has the game been won? ", isWinner());
+
+
+// counter to keep track of 3 in a row within winningPositions
+	// let counter;
+	// let winner = [];
+	// // Check Rows for wins
+	// if (player1.length >= 3 || player2.length >= 3) {
+	// 	for (let i = 0; i < winningPositions.length - 4; i++) {
+	// 		counter = 0;
+	// 		for (let j = 0; j < winningPositions[i].length; j++) {
+				
+	// 			// If player1/player2 array contains an element from ONE of the winning arrays, iterate through THAT array
+	// 			for (let k = 0; k < player1.length || k < player2.length; k++){
+	// 				if (player1[k] == winningPositions[i][j] || player2[k] == winningPositions[i][j]) {
+	// 				counter++;
+	// 				winner.push(k);
+	// 				}
+	// 				if (counter === 3)
+	// 					return true;	
+	// 				}
+	// 			console.log(winner);
+	// 		}
+	// 	}
+	// }
+	// return false;
