@@ -141,22 +141,22 @@ console.log("Is the game over?", isGameOver());
 // Determine if there are any winning combinations
 const isWinner = () => {
 	// Winners
-	if (positions[0] == positions[1] && positions[0] == positions[2])
+	if (positions[0] == positions[1] && positions[0] == positions[2] || 
+	positions[3] == positions[4] && positions[3] == positions[5])
 		return true;
-	if (positions[3] == positions[4] && positions[3] == positions[5])
+
+	if (positions[6] == positions[7] && positions[6] == positions[8] ||
+	positions[0] == positions[4] && positions[0] == positions[8])
 		return true;
-	if (positions[6] == positions[7] && positions[6] == positions[8])
+	
+	if (positions[2] == positions[4] && positions[2] == positions[6] ||
+	positions[0] == positions[3] && positions[0] == positions[6])
 		return true;
-	if (positions[0] == positions[4] && positions[0] == positions[8])
+	
+	if (positions[1] == positions[4] && positions[1] == positions[7] ||
+	positions[2] == positions[5] && positions[2] == positions[8])
 		return true;
-	if (positions[2] == positions[4] && positions[2] == positions[6])
-		return true;
-	if (positions[0] == positions[3] && positions[0] == positions[6])
-		return true;
-	if (positions[1] == positions[4] && positions[1] == positions[7])
-		return true;
-	if (positions[2] == positions[5] && positions[2] == positions[8])
-		return true;
+	
 	// Not winner
 	else
 		return false;
