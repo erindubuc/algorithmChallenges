@@ -85,7 +85,7 @@ const importBoard = (string) => {
 };
 
 // Import hard-coded positions into board
-let boardPositions = ['X', 'x', 'X', 'o', 'X', 'O', 'X', 'x', 'O'];
+let boardPositions = ['X', '', 'X', 'O', 'X', 'O', '', '', 'O'];
 importBoard(boardPositions);
 
 drawBoard();
@@ -108,7 +108,7 @@ const isValidMove = (position) => {
 		console.log("Is this move valid?", isValid);
 		return;
 	// If the position is already occupied
-	} else if (positions[position] != ' ') {
+	} else if (positions[position] != 'X' || positions[position] != 'O') {
 		console.log("This position is already taken!");
 		console.log("Is this move valid?", isValid);
 		return;
@@ -123,7 +123,33 @@ const isValidMove = (position) => {
 };
 
 // Determine if this cell is valid for a move
-// isValidMove(1);
+isValidMove(9);
+
+// Function to handle accepting and applying a move
+// If move is valid - make it
+const makeMove = (move, player) => {
+	let madeMove = false;
+	isValidMove(move);
+	if (isValidMove == false) {
+		console.log("This is not a valid move.");
+		return false;
+	} else {
+		let letter = (player == 1) ? "X" : "O";
+		positions[move] = letter;
+		
+		if (player == 1) {
+			player1.push(move);
+			positions.push(letter);
+			return true;
+		} else {
+			player2.push(move);
+			positions.push(letter);
+			return true;
+		}
+		
+	}
+};
+makeMove(1, 1);
 
 // Check the state of the board and determine if the game is over (not by winning for the moment)
 const isGameOver = () => {
