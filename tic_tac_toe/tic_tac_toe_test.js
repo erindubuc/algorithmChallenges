@@ -1,4 +1,3 @@
-// to store 'empty' value upon starting a new game
 let positions = ["","","","","","","","", ""];
 
 // const winningPositions = [
@@ -44,7 +43,7 @@ const drawBoard = () => {
 
 // board will be created with positions filled in with moves
 const importBoard = (string) => {
-	
+	drawBoard();
 	// Add played positions to empty positions array
 	for (let i = 0; i < positions.length; i++) {
 		 positions[i] = string[i];
@@ -67,7 +66,7 @@ const importBoard = (string) => {
 	console.log("Player 2: ",player2);
 	// console.log("Empty: ", empty);
 };
-drawBoard();
+// drawBoard();
 
 // Import hard-coded positions into board
 let boardPositions = ["X", "O", "", "X", "", "O", "X", "", "O"];
@@ -76,74 +75,38 @@ importBoard(boardPositions);
 // Determine if a "move" is valid before adding player input to the board
 const isValidMove = (move) => {
 	let answer;
-	// console.log(positions[position] = move);
 	// Move needs to be between 0-8
 	if (move >= 0 && move <=8) {
 		// If move is empty - it's valid, if it's not, then false
 		answer = (positions[move] == "") ? true : false;
-		console.log("Is this move valid?", answer);
+		// return answer;
+		// console.log("Is this move valid?", answer);
 	} else if (move < 0 || move > 8) {
 		console.log("You can only choose a position from 0-8.");
-		console.log("Is this move valid?", answer);
 		answer = false;
-		return false;
+		// return false;
 	} else {
 		answer = false;
-		console.log("Is this move valid?", answer);
-		return false;
+		// return false;
 	}
-
+	return answer;
 };
-
-// Determine if this cell is valid for a move
-// isValidMove();
-
-// Function to handle accepting and applying a move
-// If move is valid - make it
-const makeMove = (move, player) => {
-	
-	let letter = (player == 1) ? "X" : "O";
-	if (isValidMove(move) === false) {
-		return false;
-
-	} else {
-		positions[move] = letter;
-		
-		if (player == 1) {
-			player1.push(positions[move]);
-			positions.push(letter);
-			console.log(positions[move]);
-			console.log("Player 1: ",player1);
-			return true;
-		} else {
-			player2.push(move);
-			positions.push(move);
-			console.log(positions[move]);
-			console.log("Player 2: ",player2);
-			return true;
-		} 
-	}
-};
-makeMove(2, 2);
-
 
 // Check the state of the board and determine if the game is over (not by winning for the moment)
-const isGameOver = () => {
+const isDraw = () => {
 	
 	// If length is 9 or greater, there are no more moves to be made = DRAW
 	if (player1.length + player2.length > 8)
 		return true;
-	// else if (isWinner != false)
-	// 	return true;
 	else
 		return false;
 };
 
-isGameOver();
-console.log("Is the game over?", isGameOver());
+// isDraw();
+//console.log("Is there a draw?", isDraw());
 
 // Determine if there are any winning combinations
-const isWinner = () => {
+const didWin = () => {
 	// Winners
 	if (positions[0] == positions[1] && positions[0] == positions[2] || 
 	positions[3] == positions[4] && positions[3] == positions[5])
@@ -165,5 +128,58 @@ const isWinner = () => {
 	else
 		return false;
 };
-isWinner();
-console.log("Has the game been won? ", isWinner());
+//didWin();
+//console.log("Has the game been won? ", didWin());
+
+// Function to handle accepting and applying a move
+// If move is valid - make it
+const applyMove = (move, player) => {
+
+	let letter = (player == 1) ? "X" : "O";
+	positions[move] = letter;
+	
+	if (player == 1) {
+		player1.push(positions[move]);
+		positions.push(letter);
+		console.log(positions[move]);
+		console.log("Player 1: ",player1);
+		// return true;
+	} else {
+		player2.push(move);
+		positions.push(move);
+		console.log(positions[move]);
+		console.log("Player 2: ",player2);
+		// return true;
+	} 
+	return true;
+};
+// applyMove(2, 2);
+// Process a move - in charge of the flow of the "process to move"
+const processMove = (move, player) => {
+	// check to see if move is valid
+	if(!isValidMove(move)) 
+		return false;
+	else {
+		applyMove(move, player);
+		console.log("Applying a move");
+		// answer = (positions[move] === "") ? true : false;
+		// if valid - check for a winner
+		if (didWin()) {
+			console.log("This move wins the game!");
+			// return true;
+		}
+		// if valid - check for a draw
+		else if (isDraw()) {
+			console.log("This game has a draw! No one wins.");
+			// return true;
+		}
+		return true;
+	}
+		
+};
+processMove(2, 2);
+console.log("Processing move");
+
+// Determine if this cell is valid for a move
+// isValidMove();
+
