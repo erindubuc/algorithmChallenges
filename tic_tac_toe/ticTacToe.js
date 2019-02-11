@@ -23,7 +23,7 @@ let positionRowMid = "  " + positions[3] + "  " + "  | " + "  " + positions[4] +
 let positionRowBottom = "  " + positions[6] + "  " + "  | " + "  " + positions[7] + "  " + "  | " + "  " + positions[8] + " ";
 const horizRow = "- - -" + " + " + "- - -" + " + " + "- - -";
 
-const drawBoard = () => {
+function drawBoard () {
 	console.log(allBlank);
 	console.log(positionRowTop);
 	console.log(allBlank);
@@ -38,10 +38,10 @@ const drawBoard = () => {
 	console.log(positionRowBottom);
 	console.log(allBlank);
 	
-};
+}
 
 // board will be created with positions filled in with moves
-const importBoard = (string) => {
+function importBoard(string) {
 	drawBoard();
 	// Add played positions to empty positions array
 	for (let i = 0; i < positions.length; i++) {
@@ -60,16 +60,17 @@ const importBoard = (string) => {
 
 	console.log("Player 1: ",player1);
 	console.log("Player 2: ",player2);
-};
+}
 // drawBoard();
 
 // Determine if a "move" is valid before adding player input to the board
-const isValidMove = (move) => {
+function isValidMove(move) {
 	let answer;
 	// Move needs to be between 0-8
-	if (move >= 0 && move <=8) 
+	if (move >= 0 && move <=8)
 		// If move is empty - it's valid, if it's not, then false
 		answer = (positions[move] == "") ? true : false;
+		
 	else if (move < 0 || move > 8) {
 		console.log("You can only choose a position from 0-8.");
 		answer = false;
@@ -77,89 +78,105 @@ const isValidMove = (move) => {
 		answer = false;
 	}
 	return answer;
-};
+}
 
 // Check the state of the board and determine if the game is over (not by winning for the moment)
-const isDraw = () => {
+function isDraw() {
 	
 	// If length is 9 or greater, there are no more moves to be made = DRAW
 	if (player1.length + player2.length > 8)
 		return true;
 	else
 		return false;
-};
+}
 
 // isDraw();
 //console.log("Is there a draw?", isDraw());
 
 // Determine if there are any winning combinations
-const didWin = () => {
+function didWin() {
 	// let position;
 	// positions[position] = position;
-
+	let winner;
 	// Winners
-	if (positions[0] == positions[1] && positions[0] == positions[2] && positions[0] != '') 
+	if (positions[0] == positions[1] && positions[0] == positions[2] && positions[0] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[3] == positions[4] && positions[3] == positions[5] && positions[3] != '')
+	} else if (positions[3] == positions[4] && positions[3] == positions[5] && positions[3] != ''){ 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[6] == positions[7] && positions[6] == positions[8] && positions[6] != '')
+	
+	} else if (positions[6] == positions[7] && positions[6] == positions[8] && positions[6] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[0] == positions[4] && positions[0] == positions[8] && positions[0] != '')
+	
+	} else if (positions[0] == positions[4] && positions[0] == positions[8] && positions[0] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[2] == positions[4] && positions[2] == positions[6] && positions[2] != '')
+	
+	} else if (positions[2] == positions[4] && positions[2] == positions[6] && positions[2] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[0] == positions[3] && positions[0] == positions[6] && positions[0] != '')
+	
+	} else if (positions[0] == positions[3] && positions[0] == positions[6] && positions[0] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[1] == positions[4] && positions[1] == positions[7] && positions[1] != '')
+	
+	} else if (positions[1] == positions[4] && positions[1] == positions[7] && positions[1] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
-	if (positions[2] == positions[5] && positions[2] == positions[8] && positions[2] != '')
+
+	} else if (positions[2] == positions[5] && positions[2] == positions[8] && positions[2] != '') { 
+		winner = (positions[0] == 'X') ? console.log("X is the winner!") : console.log("O is the winner!");
 		return true;
+
 		
 	// Not winner
-	else
+	} else
 		return false;
-};
+}
 //didWin();
 //console.log("Has the game been won? ", didWin());
 
 // Function to handle accepting and applying a move
-const applyMove = (move, player) => {
+function applyMove(move, player) {
 
 	let letter = (player == 1) ? "X" : "O";
 	positions[move] = letter;
 	
 	if (player == 1) {
 		player1.push(move);
-		positions.splice(positions[move], 1, letter);
+		positions.splice(move, 1, letter);
 		console.log(positions[move]);
 		console.log("Player 1: ",player1);
 		console.log(positions);
 	} else {
 		player2.push(move);
-		positions.splice(positions[move], 1, letter);
+		// positions.splice(positions[move], 1, letter);
+		positions.splice(move, 1, letter);
 		// positions.push(letter);
 		console.log(positions[move]);
 		console.log("Player 2: ",player2);
 		console.log(positions);
 	} 
 	return true;
-};
+}
 
 // Reset board after a win or draw
-const resetBoard = () => {
+function resetBoard() {
 	for (let i = 0; i < positions.length; i++)
 		positions[i] = "";
-};
+}
 
 // Reset player arrays after win or draw
-const resetPlayers = () => {
+function resetPlayers() {
 		player1 = [];
 		player2 = [];
-};
+}
 
 
 // Check for win and draw throughout play
-const isGameOver = () => {
+function isGameOver() {
 	if (didWin()) {
 		console.log("Yay! We have a winner! Game over.");
 		resetBoard();
@@ -177,35 +194,77 @@ const isGameOver = () => {
 	}
 	return false;
 	
-};
+}
 // applyMove(2, 2);
 
 // Process a move - in charge of the flow of the "process to move"
-const processMove = (move, player) => {
+function processMove(move, player) {
 	// check to see if move is valid
-	if(!isValidMove(move)) 
+	if(!isValidMove(move)) {
+		console.log("This is not a valid move. Try again.");
 		return false;
-	else {
+	} else {
 		applyMove(move, player);
 		isGameOver();
 		return true;
 	}
 		
-};
+}
 
 
 
-// Import hard-coded positions into board
-let boardPositions = ["X", "O", "", "X", "", "O", "X", "", "O"];
+// // Import hard-coded positions into board
+// let boardPositions = ["X", "O", "", "X", "", "O", "X", "", "O"];
+// importBoard(boardPositions);
+
+// processMove(2, 1);
+// processMove(2, 2);
+// // console.log("Processing move");
+// console.log(positions);
+// console.log("player1: ", player1);
+// console.log("player2: ", player2);
+
+
+
+// testing
+let boardPositions = ["","","","","","","","",""];
 importBoard(boardPositions);
 
-processMove(2, 1);
-processMove(2, 2);
-// console.log("Processing move");
-console.log(positions);
-console.log("player1: ", player1);
-console.log("player2: ", player2);
+function xWins() {
+	processMove(0,1);
+	processMove(4,2);
+	processMove(1,1);
+	// processMove(4,2);
+	processMove(7,2);
+	processMove(2,1);
+	console.log("player1: ", player1);
+	console.log("player2: ", player2);
+}
+// xWins();
 
+function oWins() {
+	processMove(4,1);
+	processMove(7,2);
+	processMove(1,1);
+	processMove(8,2);
+	processMove(2,1);
+	processMove(6,2);
+	console.log("player1: ", player1);
+	console.log("player2: ", player2);
+}
+//oWins();
 
-
-
+function draw() {
+	processMove(7,1);
+	processMove(8,2);
+	processMove(4,1);
+	processMove(1,2);
+	processMove(2,1);
+	processMove(6,2);
+	processMove(0,1);
+	processMove(3,2);
+	processMove(5,1);
+	console.log("player1: ", player1);
+	console.log("player2: ", player2);
+}
+draw();
