@@ -1,5 +1,9 @@
-let positions = ["","","","","","","","",""];
+const readline = require('readline-sync');
 
+
+
+let positions = ["","","","","","","","",""];
+let turn = 1;
 // const winningPositions = [
 // 	[0,1,2],
 // 	[3,4,5],
@@ -14,8 +18,8 @@ let positions = ["","","","","","","","",""];
 // Arrays to hold player moves
 // When player makes a move, their position number will get pushed to their array
 // Later, these arrays can be compared with the winningPositions arrays to find a winner
-let player1 = [];
-let player2 = [];
+let playerX = [];
+let playerO = [];
 // let position;
 const allBlank = "      " + "|" + "       " + "|" + "      ";
 let positionRowTop = "  " + positions[0] + "  " + "  | " + "  " + positions[1] + "  " + "  | " + "  " + positions[2] + " ";
@@ -53,13 +57,13 @@ function importBoard(string) {
 	for (let j = 0; j < positions.length; j++) {	
 		
 		if (positions[j] == "X" || positions[j] == "x")
-			player1.push(j);
+			playerX.push(j);
 		else if (positions[j] == "O" || positions[j] == "o")
-			player2.push(j);
+			playerO.push(j);
 	}
 
-	console.log("Player 1: ",player1);
-	console.log("Player 2: ",player2);
+	console.log("Player X: ",playerX);
+	console.log("Player O: ",playerO);
 }
 // drawBoard();
 
@@ -84,7 +88,7 @@ function isValidMove(move) {
 function isDraw() {
 	
 	// If length is 9 or greater, there are no more moves to be made = DRAW
-	if (player1.length + player2.length > 8)
+	if (playerX.length + playerO.length > 8)
 		return true;
 	else
 		return false;
@@ -139,24 +143,25 @@ function didWin() {
 //console.log("Has the game been won? ", didWin());
 
 // Function to handle accepting and applying a move
-function applyMove(move, player) {
-
-	let letter = (player == 1) ? "X" : "O";
+function applyMove(move) {
+	
+	let letter = (turn % 2 != 0) ? "X" : "O";
 	positions[move] = letter;
 	
-	if (player == 1) {
-		player1.push(move);
+	//if (player == 1) {
+	if (letter == 'X') {
+		playerX.push(move);
 		positions.splice(move, 1, letter);
 		console.log(positions[move]);
-		console.log("Player 1: ",player1);
+		console.log("Player 1: ",playerX);
 		console.log(positions);
 	} else {
-		player2.push(move);
+		playerO.push(move);
 		// positions.splice(positions[move], 1, letter);
 		positions.splice(move, 1, letter);
 		// positions.push(letter);
 		console.log(positions[move]);
-		console.log("Player 2: ",player2);
+		console.log("Player 2: ",playerO);
 		console.log(positions);
 	} 
 	return true;
@@ -170,8 +175,8 @@ function resetBoard() {
 
 // Reset player arrays after win or draw
 function resetPlayers() {
-		player1 = [];
-		player2 = [];
+		playerX = [];
+		playerO = [];
 }
 
 
@@ -198,13 +203,13 @@ function isGameOver() {
 // applyMove(2, 2);
 
 // Process a move - in charge of the flow of the "process to move"
-function processMove(move, player) {
+function processMove(move) {
 	// check to see if move is valid
 	if(!isValidMove(move)) {
 		console.log("This is not a valid move. Try again.");
 		return false;
 	} else {
-		applyMove(move, player);
+		applyMove(move);
 		isGameOver();
 		return true;
 	}
@@ -228,7 +233,7 @@ function processMove(move, player) {
 
 // testing
 let boardPositions = ["","","","","","","","",""];
-importBoard(boardPositions);
+// importBoard(boardPositions);
 
 function xWins() {
 	processMove(0,1);
@@ -237,8 +242,8 @@ function xWins() {
 	// processMove(4,2);
 	processMove(7,2);
 	processMove(2,1);
-	console.log("player1: ", player1);
-	console.log("player2: ", player2);
+	console.log("player1: ", playerX);
+	console.log("player2: ", playerO);
 }
 // xWins();
 
@@ -249,8 +254,8 @@ function oWins() {
 	processMove(8,2);
 	processMove(2,1);
 	processMove(6,2);
-	console.log("player1: ", player1);
-	console.log("player2: ", player2);
+	console.log("player1: ", playerX);
+	console.log("player2: ", playerO);
 }
 //oWins();
 
@@ -264,7 +269,39 @@ function draw() {
 	processMove(0,1);
 	processMove(3,2);
 	processMove(5,1);
-	console.log("player1: ", player1);
-	console.log("player2: ", player2);
+	console.log("player1: ", playerX);
+	console.log("player2: ", playerO);
 }
-draw();
+// draw();
+
+// the game loop the game should ask the user for input. The current goal is 
+// simply to accept the input and validate that it's something your application can use.
+function playerInput() {
+	console.log("Welcome to Tic-Tac-Toe!"); 
+	console.log("Player 1 will be X.  Player 2 will be O.");
+	console.log("Player 1, you will go first.");
+	console.log("Enter a position number 0-8, or 'Q' at any time to quit.");
+	console.log("********************************************************");
+	
+	do {
+		var prompt = (turn % 2 != 0) ? "Player 1, where would you like to move? " : 
+			"Player 2, where would you like to move? ";
+		var move = readline.question(prompt);
+		
+		if(!isValidMove(move)) {
+			console.log("This is an invalid move.  Please choose a number between 0-8.");
+			continue;
+		} else {
+			processMove(move);
+			turn++;
+			console.log("turn count: ", turn);
+			
+			if(isGameOver())
+				break;
+		} 
+		
+		
+	} while (move != 'q' || move != 'Q' && !isGameOver());
+	
+}
+playerInput();
