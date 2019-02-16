@@ -21,11 +21,11 @@ let turn = 1;
 let playerX = [];
 let playerO = [];
 // let position;
-const allBlank = "      " + "|" + "       " + "|" + "      ";
+let allBlank = "      " + "|" + "       " + "|" + "      ";
 let positionRowTop = "  " + positions[0] + "  " + "  | " + "  " + positions[1] + "  " + "  | " + "  " + positions[2] + " ";
 let positionRowMid = "  " + positions[3] + "  " + "  | " + "  " + positions[4] + "  " + "  | " + "  " + positions[5] + " ";
 let positionRowBottom = "  " + positions[6] + "  " + "  | " + "  " + positions[7] + "  " + "  | " + "  " + positions[8] + " ";
-const horizRow = "- - -" + " + " + "- - -" + " + " + "- - -";
+let horizRow = "- - -" + " + " + "- - -" + " + " + "- - -";
 
 function drawBoard () {
 	console.log(allBlank);
@@ -44,14 +44,19 @@ function drawBoard () {
 	
 }
 
+// function markBoard(move, letter) {
+//     positions[move] = letter;
+// }
+
 // board will be created with positions filled in with moves
 function importBoard(string) {
 	drawBoard();
+	startNewGame();
 	// Add played positions to empty positions array
 	for (let i = 0; i < positions.length; i++) {
 		 positions[i] = string[i];
 	}
-		console.log(positions);
+		// console.log(positions);
 	
 	// to push moves to player arrays
 	for (let j = 0; j < positions.length; j++) {	
@@ -62,8 +67,8 @@ function importBoard(string) {
 			playerO.push(j);
 	}
 
-	console.log("Player X: ",playerX);
-	console.log("Player O: ",playerO);
+	// console.log("Player X: ",playerX);
+	// console.log("Player O: ",playerO);
 }
 // drawBoard();
 
@@ -82,6 +87,7 @@ function isValidMove(move) {
 		answer = false;
 	}
 	return answer;
+	// return move;
 }
 
 // Check the state of the board and determine if the game is over (not by winning for the moment)
@@ -152,25 +158,31 @@ function applyMove(move) {
 	if (letter == 'X') {
 		playerX.push(move);
 		positions.splice(move, 1, letter);
-		console.log(positions[move]);
-		console.log("Player 1: ",playerX);
+		// markBoard(move, letter);
+		// console.log(positions[move]);
+		// console.log("Player 1: ",playerX);
 		console.log(positions);
 	} else {
 		playerO.push(move);
 		// positions.splice(positions[move], 1, letter);
 		positions.splice(move, 1, letter);
-		// positions.push(letter);
-		console.log(positions[move]);
-		console.log("Player 2: ",playerO);
+		// markBoard(move, letter);
+		// console.log(positions[move]);
+		// console.log("Player 2: ",playerO);
 		console.log(positions);
 	} 
-	return true;
+	// return positions[move] = letter;
+	return letter;
 }
 
 // Reset board after a win or draw
 function resetBoard() {
+	startNewGame();
 	for (let i = 0; i < positions.length; i++)
 		positions[i] = "";
+	// Set turn counter back to 0
+	turn = 0;
+	
 }
 
 // Reset player arrays after win or draw
@@ -183,18 +195,20 @@ function resetPlayers() {
 // Check for win and draw throughout play
 function isGameOver() {
 	if (didWin()) {
-		console.log("Yay! We have a winner! Game over.");
+		// console.log("Yay! We have a winner! Game over.");
 		resetBoard();
 		resetPlayers();
 		drawBoard();
+		// startNewGame();
 		return true;
 	}
 	// if valid - check for a draw
 	else if (isDraw()) {
-		console.log("This game has a draw! No one wins.");
+		// console.log("This game has a draw! No one wins.");
 		resetBoard();
 		resetPlayers();
 		drawBoard();
+		// startNewGame();
 		return true;
 	}
 	return false;
@@ -222,17 +236,9 @@ function processMove(move) {
 // let boardPositions = ["X", "O", "", "X", "", "O", "X", "", "O"];
 // importBoard(boardPositions);
 
-// processMove(2, 1);
-// processMove(2, 2);
-// // console.log("Processing move");
-// console.log(positions);
-// console.log("player1: ", player1);
-// console.log("player2: ", player2);
-
-
 
 // testing
-let boardPositions = ["","","","","","","","",""];
+//let boardPositions = ["","","","","","","","",""];
 // importBoard(boardPositions);
 
 function xWins() {
@@ -273,20 +279,42 @@ function draw() {
 	console.log("player2: ", playerO);
 }
 // draw();
-
-// the game loop the game should ask the user for input. The current goal is 
-// simply to accept the input and validate that it's something your application can use.
-function playerInput() {
+let newGame;
+function startNewGame() {
+	
 	console.log("Welcome to Tic-Tac-Toe!"); 
 	console.log("Player 1 will be X.  Player 2 will be O.");
 	console.log("Player 1, you will go first.");
-	console.log("Enter a position number 0-8, or 'Q' at any time to quit.");
 	console.log("********************************************************");
+	console.log("You may enter 'q' at any time to quit.");
+	console.log("You may enter 'd' at any time to display the board positions.");
+	console.log("********************************************************");
+	console.log("Where would you like to make a move?");
+	console.log("Enter a position number 0-8");
+	seeBoardPositions();
+	console.log("********************************************************");
+	return newGame = true;
+}
+// the game loop the game should ask the user for input. The current goal is 
+// simply to accept the input and validate that it's something your application can use.
+function playerInput() {
 	
 	do {
 		var prompt = (turn % 2 != 0) ? "Player 1, where would you like to move? " : 
 			"Player 2, where would you like to move? ";
 		var move = readline.question(prompt);
+		
+		
+		if (move == 'q' || move == 'Q') {
+		  console.log("You are ending the game.");
+		  process.exitCode = 0;
+		  break;
+		}
+		else if (move == 'd') {
+			seeBoardPositions();
+			continue;
+		} else
+			move = parseInt(move, 10);
 		
 		if(!isValidMove(move)) {
 			console.log("This is an invalid move.  Please choose a number between 0-8.");
@@ -296,12 +324,28 @@ function playerInput() {
 			turn++;
 			console.log("turn count: ", turn);
 			
-			if(isGameOver())
-				break;
 		} 
 		
+		if(isGameOver())
+			break;
 		
 	} while (move != 'q' || move != 'Q' && !isGameOver());
+	// } while (!newGame && !isGameOver());
 	
 }
+
+function seeBoardPositions () {
+	console.log("Board Positions: \n");
+	console.log("    |     |     ");
+	console.log(" 0  |  1  |  2  ");
+	console.log("____|_____|_____");
+	console.log("    |     |     ");
+	console.log(" 3  |  4  |  5  ");
+	console.log("____|_____|_____");
+	console.log("    |     |     ");
+	console.log(" 6  |  7  |  8  ");
+	console.log("    |     |     ");
+}
+
+importBoard(positions);
 playerInput();
