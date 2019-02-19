@@ -236,8 +236,95 @@ function processMove(move) {
 // let boardPositions = ["X", "O", "", "X", "", "O", "X", "", "O"];
 // importBoard(boardPositions);
 
+let newGame;
+function startNewGame() {
+	do {
+		var prompt = console.log("Would you like to begin a game of Tic-Tac-Toe?");
+		var answer = readline.question(prompt);
+		
+		if (answer == 'n') {
+			console.log("Bye!");
+			process.exitCode = 0;
+			newGame = false;
+			break;
+			
+		} else {
+			
+			console.log("Welcome to Tic-Tac-Toe!"); 
+			console.log("Player 1 will be X.  Player 2 will be O.");
+			console.log("Player 1, you will go first.");
+			console.log("********************************************************");
+			console.log("You may enter 'q' at any time to quit.");
+			console.log("You may enter 'd' at any time to display the board positions.");
+			console.log("********************************************************");
+			console.log("Where would you like to make a move?");
+			console.log("Enter a position number 0-8");
+			seeBoardPositions();
+			console.log("********************************************************");
+			playerInput();
+			return newGame = true;
+		} 
+	} while (answer != 'n' || answer != 'q' && !isGameOver());
+}
 
-// testing
+// the game loop the game should ask the user for input. The current goal is 
+// simply to accept the input and validate that it's something your application can use.
+function playerInput() {
+	
+	do {
+		var prompt = (turn % 2 != 0) ? "Player 1, where would you like to move? " : 
+			"Player 2, where would you like to move? ";
+		var move = readline.question(prompt);
+		
+		
+		if (move == 'q' || move == 'Q') {
+		  console.log("You are ending the game.");
+		  process.exitCode = 0;
+		  break;
+		}
+		else if (move == 'd') {
+			seeBoardPositions();
+			continue;
+		} else
+			move = parseInt(move, 10);
+		
+		if(!isValidMove(move)) {
+			console.log("This is an invalid move.  Please choose a number between 0-8.");
+			continue;
+		} else {
+			processMove(move);
+			turn++;
+			console.log("turn count: ", turn);
+			
+		} 
+
+	} while (move != 'q' || move != 'Q' && !isGameOver());
+	// } while (!newGame && !isGameOver());
+	
+}
+
+function seeBoardPositions () {
+	console.log("Board Positions: \n");
+	console.log("    |     |     ");
+	console.log(" 0  |  1  |  2  ");
+	console.log("____|_____|_____");
+	console.log("    |     |     ");
+	console.log(" 3  |  4  |  5  ");
+	console.log("____|_____|_____");
+	console.log("    |     |     ");
+	console.log(" 6  |  7  |  8  ");
+	console.log("    |     |     ");
+}
+
+importBoard(positions);
+playerInput();
+
+
+// TODO:
+// prompt to begin a new game
+// way to see the moves placed on the baord
+
+// TESTING:
 //let boardPositions = ["","","","","","","","",""];
 // importBoard(boardPositions);
 
@@ -279,73 +366,3 @@ function draw() {
 	console.log("player2: ", playerO);
 }
 // draw();
-let newGame;
-function startNewGame() {
-	
-	console.log("Welcome to Tic-Tac-Toe!"); 
-	console.log("Player 1 will be X.  Player 2 will be O.");
-	console.log("Player 1, you will go first.");
-	console.log("********************************************************");
-	console.log("You may enter 'q' at any time to quit.");
-	console.log("You may enter 'd' at any time to display the board positions.");
-	console.log("********************************************************");
-	console.log("Where would you like to make a move?");
-	console.log("Enter a position number 0-8");
-	seeBoardPositions();
-	console.log("********************************************************");
-	return newGame = true;
-}
-// the game loop the game should ask the user for input. The current goal is 
-// simply to accept the input and validate that it's something your application can use.
-function playerInput() {
-	
-	do {
-		var prompt = (turn % 2 != 0) ? "Player 1, where would you like to move? " : 
-			"Player 2, where would you like to move? ";
-		var move = readline.question(prompt);
-		
-		
-		if (move == 'q' || move == 'Q') {
-		  console.log("You are ending the game.");
-		  process.exitCode = 0;
-		  break;
-		}
-		else if (move == 'd') {
-			seeBoardPositions();
-			continue;
-		} else
-			move = parseInt(move, 10);
-		
-		if(!isValidMove(move)) {
-			console.log("This is an invalid move.  Please choose a number between 0-8.");
-			continue;
-		} else {
-			processMove(move);
-			turn++;
-			console.log("turn count: ", turn);
-			
-		} 
-		
-		if(isGameOver())
-			break;
-		
-	} while (move != 'q' || move != 'Q' && !isGameOver());
-	// } while (!newGame && !isGameOver());
-	
-}
-
-function seeBoardPositions () {
-	console.log("Board Positions: \n");
-	console.log("    |     |     ");
-	console.log(" 0  |  1  |  2  ");
-	console.log("____|_____|_____");
-	console.log("    |     |     ");
-	console.log(" 3  |  4  |  5  ");
-	console.log("____|_____|_____");
-	console.log("    |     |     ");
-	console.log(" 6  |  7  |  8  ");
-	console.log("    |     |     ");
-}
-
-importBoard(positions);
-playerInput();
